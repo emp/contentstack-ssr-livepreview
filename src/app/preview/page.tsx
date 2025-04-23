@@ -6,8 +6,9 @@ export default async function Page({ searchParams }: { searchParams: any }) {
   const entryData = await someCallToGetData(await searchParams);
 
   return (
-    <section>
-      <h1 className="text-red-500 text-3xl">Dynamic: {" " + entryData?.title}</h1>
+    <section className="text-red-300">
+      <h1 className="text-3xl">Dynamic: {" " + entryData?.title}</h1>
+      <pre>{JSON.stringify(entryData, null, 2)}</pre>
       <LivePreviewInitComponent />
     </section>
   );

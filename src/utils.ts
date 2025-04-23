@@ -1,6 +1,5 @@
 import { LivePreviewQuery } from "contentstack";
 import Contentstack from "contentstack";
-import { headers } from "next/headers";
 
 export function getStack() {
   return Contentstack.Stack({
@@ -16,14 +15,11 @@ export function getStack() {
 }
 
 export async function someCallToGetData(queryParams?: LivePreviewQuery) {
-  const h = await headers();
-  const referer = h.get("referer");
-  console.log("referer: ", referer);
-  // const url = new URL(referer ? referer : "");
-  // const test = url.searchParams.get("test");
-  // console.log("test: ", test);
   const stack = getStack();
   if (queryParams?.live_preview) stack.livePreviewQuery(queryParams);
-  const query = stack.ContentType("post").Entry("blt9ca013deb6685bdb");
+  const query = stack
+    .ContentType("post")
+    .Entry("blt9ca013deb6685bdb")
+    .includeReference(["modular_blocks.entry_reference.reference"]);
   return await query.toJSON().fetch();
 }
